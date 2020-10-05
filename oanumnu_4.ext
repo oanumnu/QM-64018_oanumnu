@@ -1,0 +1,62 @@
+---
+title: "Wiglet Corp"
+author: "Obianuju Anumnu"
+date: "10/4/2020"
+output: html_document
+---
+```{r}
+library(lpSolveAPI)
+lprec <- make.lp(0, 9)
+#set obj function
+set.objfn (lprec, c(420,360,300,420,360,300,420,360,300))
+
+#change direction to maximum
+lp.control(lprec, sense ="max" )
+
+#add constraints
+add.constraint(lprec, c(1,1,1,0,0,0,0,0,0), "<=", 750)
+add.constraint(lprec, c(0,0,0,1,1,1,0,0,0), "<=", 900)
+add.constraint(lprec, c(0,0,0,0,0,0,1,1,1), "<=", 450)
+add.constraint(lprec, c(20,15,12,0,0,0,0,0,0), "<=", 13000)
+add.constraint(lprec, c(0,0,0,20,15,12,0,0,0), "<=", 12000)
+add.constraint(lprec, c(0,0,0,0,0,0,20,15,12), "<=",  5000)
+add.constraint(lprec, c(1,0,0,1,0,0,1,0,0), "<=", 900)
+add.constraint(lprec, c(0,1,0,0,1,0,0,1,0), "<=", 1200)
+add.constraint(lprec, c(0,0,1,0,0,1,0,0,1), "<=", 750)
+add.constraint(lprec, c(900,900,900,-750,-750,-750,0,0,0), "=", 0)
+add.constraint(lprec, c(450,450,450,0,0,0,-750,-750,-750), "=", 0)
+
+#name variables and constraints
+lp.rownames<- c("capacity 1", "capacity 2", "capacity 3", "storage 1", "storage 2", "storage 3", "sales 1", "sales 2", "sales 3", "percentage 1", "percenatge 2")
+lp.colnames <- c("L1","M1","S1", "L2", "M2","S2", "L3","M3", "S3")
+dimnames(lprec) <- list(lp.rownames,lp.colnames)
+lprec
+```
+```{r}
+solve(lprec)
+```
+```{r}
+get.objective(lprec)
+get.variables(lprec)
+```
+
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
