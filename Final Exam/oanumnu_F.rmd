@@ -1,0 +1,36 @@
+---
+title: "Quant_Group Formation"
+output:
+  html_document:
+    df_print: paged
+  html_notebook:
+    highlight: textmate
+    theme: cerulean
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+dir.create("images")
+```
+
+```{r}
+setwd("C:\\Users\\Obianuju\\OneDrive\\D\\quant Mgt\\final exam")
+library(lpSolveAPI)
+x <- read.lp("GF.lp")
+x
+```
+
+
+```{r}
+solve(x)
+get.objective(x)
+get.variables(x)
+```
+Group1	Group2	Group3	Group4
+   1	    4	     6	      2
+   8	    9	     7	      3
+  10	   11	    12	      5
+
+
+
